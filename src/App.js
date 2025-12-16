@@ -73,7 +73,7 @@ const cardClasses = `text-center w-full max-w-2xl rounded-2xl shadow p-6 select-
       className={`absolute top-1 left-1 w-8 h-8 rounded-full bg-white shadow-md flex items-center justify-center transition-transform duration-300
         ${dark ? "translate-x-10" : "translate-x-0"}`}
     >
-      {dark ? "<FaMoon/>" : "<FaSun/>"}
+      {dark ? <FaMoon className="text-slate-400"/> : <FaSun className="text-slate-400" />}
     </div>
   </button>
 </div>
@@ -110,10 +110,6 @@ const cardClasses = `text-center w-full max-w-2xl rounded-2xl shadow p-6 select-
     </div>
   </button>
 </div>
-
-
-
-
       <img
         src={logo}
         alt="Logo"
