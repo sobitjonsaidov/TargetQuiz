@@ -1,29 +1,30 @@
 import { useState, useEffect } from "react";
 import { QUESTIONS } from "./data/questions";
+import { FaSun, FaMoon } from "react-icons/fa";
+import logo from "./assets/itschool.png";
 import Question from "./components/Question";
 
-
-const TOTAL_TIME = 16 * 60; // 16 daqiqa
+const TOTAL_TIME = 20 * 60;
 
 export default function App() {
   const [time, setTime] = useState(TOTAL_TIME);
   const [index, setIndex] = useState(0);
   const [answers, setAnswers] = useState({});
   const [finished, setFinished] = useState(false);
+  const [dark, setDark] = useState(false);
 
-  // Timer ishlashi
+  // Light/Dark toggle
+  useEffect(() => {
+    if (dark) document.documentElement.classList.add("dark");
+    else document.documentElement.classList.remove("dark");
+  }, [dark]);
+
+  // Timer
   useEffect(() => {
     if (finished) return;
+    if (time <= 0) return setFinished(true);
 
-    if (time <= 0) {
-      setFinished(true);
-      return;
-    }
-
-    const timer = setInterval(() => {
-      setTime((prev) => prev - 1);
-    }, 1000);
-
+    const timer = setInterval(() => setTime((prev) => prev - 1), 1000);
     return () => clearInterval(timer);
   }, [time, finished]);
 
@@ -35,32 +36,92 @@ export default function App() {
   );
 
   const level =
-    score <= 10
+    score <= 25
       ? "Beginner"
-      : score <= 20
-        ? "Elementary"
-        : score <= 30
-          ? "Pre-Intermediate"
-          : score <= 40
-            ? "Intermediate"
-            : "Advanced";
+      : score <= 35
+      ? "Elementary"
+      : score <= 45
+      ? "Pre-Intermediate"
+      : "Intermediate";
+
+  // Wrapper va card classlari
+ const wrapperClasses = `min-h-screen flex flex-col items-center justify-center transition-colors duration-300 ${
+  dark ? "bg-slate-900" : "bg-slate-200"
+}`;
+
+const cardClasses = `text-center w-full max-w-2xl rounded-2xl shadow p-6 select-none transition-colors duration-300 
+  ${dark 
+    ? "bg-slate-800 text-white"   // Dark mode: qora fon, oq matn
+    : "bg-white text-gray-900"    // Light mode: oq fon, qora matn
+  }`;
+
+  const toggleBtnClasses = `mb-6 px-4 py-2 rounded-xl transition-colors duration-300 ${
+    dark ? "bg-slate-700 text-white" : "bg-slate-400 text-gray-900"
+  }`;
 
   if (finished) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
-        <div className="bg-white p-6 rounded-2xl shadow max-w-md w-full text-center">
+      <div className={wrapperClasses}>
+        <div className="w-full flex mb-6 px-4 sm:px-6 md:px-8">
+  <button
+    onClick={() => setDark(!dark)}
+    className={`relative w-20 h-10 rounded-full transition-colors duration-300
+      ${dark ? "bg-gray-700" : "bg-slate-500"} ml-auto mr-6`}
+  >
+    {/* Circle va emoji birga siljiydi */}
+    <div
+      className={`absolute top-1 left-1 w-8 h-8 rounded-full bg-white shadow-md flex items-center justify-center transition-transform duration-300
+        ${dark ? "translate-x-10" : "translate-x-0"}`}
+    >
+      {dark ? "<FaMoon/>" : "<FaSun/>"}
+    </div>
+  </button>
+</div>
+
+        <img
+          src={logo}
+          alt="Logo"
+          className="w-28 sm:w-36 md:w-44 lg:w-52 xl:w-80 mb-6 object-contain"
+        />
+
+       <div className={cardClasses}>
           <h1 className="text-2xl font-bold mb-4">Result</h1>
           <p className="text-lg">Score: {score}</p>
           <p className="text-xl font-semibold mt-2">Level: {level}</p>
-        </div>
+      </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4 ">
-      <div className="bg-white w-full max-w-2xl rounded-2xl shadow p-6 select-none">
-        <div className="flex justify-between mb-4 text-sm text-gray-600 ">
+    <div className={wrapperClasses}>
+      <div className="w-full flex mb-6 px-4 sm:px-6 md:px-8">
+  <button
+    onClick={() => setDark(!dark)}
+    className={`relative w-20 h-10 rounded-full transition-colors duration-300
+      ${dark ? "bg-gray-700" : "bg-slate-500"} ml-auto mr-6`}
+  >
+    {/* Circle va emoji birga siljiydi */}
+    <div
+      className={`absolute top-1 left-1 w-8 h-8 rounded-full bg-white shadow-md flex items-center justify-center transition-transform duration-300
+        ${dark ? "translate-x-10 text-blue-500" : "translate-x-0 text-yellow-400"}`}
+    >
+      {dark ? <FaMoon className="text-slate-400"/> : <FaSun className="text-slate-400" />}
+    </div>
+  </button>
+</div>
+
+
+
+
+      <img
+        src={logo}
+        alt="Logo"
+        className="w-28 sm:w-36 md:w-44 lg:w-52 xl:w-80 mb-6 object-contain"
+      />
+
+      <div className={cardClasses}>
+        <div className="flex justify-between mb-4 text-sm text-inherit">
           <span>
             Question {index + 1}/{QUESTIONS.length}
           </span>
@@ -69,21 +130,16 @@ export default function App() {
           </span>
         </div>
 
-        <Question
-          question={QUESTIONS[index]}
-          selected={answers[index]}
-          choose={choose}
-        />
+        <Question question={QUESTIONS[index]} selected={answers[index]} choose={choose} />
 
         <div className="flex justify-between mt-6">
-
           <button
             onClick={() =>
               index + 1 === QUESTIONS.length
                 ? setFinished(true)
                 : setIndex((i) => i + 1)
             }
-            className="px-4 py-2 rounded-xl bg-blue-600 text-white"
+            className="px-4 py-2 rounded-xl bg-slate-600 text-white"
           >
             {index + 1 === QUESTIONS.length ? "Finish" : "Next"}
           </button>
