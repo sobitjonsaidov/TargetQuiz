@@ -1,14 +1,16 @@
 export default function Question({ question, selected, choose }) {
     return (
-        <div className="text-inherit">
+        <div className="text-inherit w-full">
             <h2 className="text-lg font-semibold mb-4">{question.q}</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-inherit">
+
+            {/* Mobile: 1 ustun, Desktop: 2 ustun */}
+            <div className="grid lg:grid-cols-2 sm:grid-cols-1 gap-4 w-full">
                 {question.options.map((op, i) => (
                     <button
                         key={i}
                         onClick={() => choose(i)}
-                        className={`border rounded-xl p-3 text-left transition 
-          ${selected === i ? "bg-slate-400 text-white" : "hover:bg-slate-500 hover:text-white "}`}
+                        className={`w-full p-4 text-left rounded-xl border transition 
+              ${selected === i ? "bg-slate-600 text-white" : "hover:bg-slate-500 text-gray-900 hover:text-white"}`}
                     >
                         {op}
                     </button>

@@ -19,22 +19,18 @@ export default function App() {
   const [finished, setFinished] = useState(false);
   const [dark, setDark] = useState(false);
 
-  // Dark / Light toggle
   useEffect(() => {
     if (dark) document.documentElement.classList.add("dark");
     else document.documentElement.classList.remove("dark");
   }, [dark]);
 
-  // Savollarni randomlashtirish
   useEffect(() => {
     setQuestions(shuffleArray(QUESTIONS));
   }, []);
 
-  // Timer
   useEffect(() => {
     if (finished) return;
     if (time <= 0) return setFinished(true);
-
     const timer = setInterval(() => setTime((prev) => prev - 1), 1000);
     return () => clearInterval(timer);
   }, [time, finished]);
@@ -55,7 +51,7 @@ export default function App() {
       ? "Pre-Intermediate"
       : "Intermediate";
 
-  const wrapperClasses = `min-h-screen flex flex-col items-center justify-center transition-colors duration-300 px-4 ${
+  const wrapperClasses = `min-h-screen flex flex-col items-center justify-center transition-colors duration-300 px-4 sm:px-6 md:px-8 ${
     dark ? "bg-slate-900" : "bg-slate-200"
   }`;
 
@@ -67,7 +63,22 @@ export default function App() {
   if (finished) {
     return (
       <div className={wrapperClasses}>
-        <img src={dark ? logodark : logolight} alt="Logo" className="w-40 mb-6 mx-auto" />
+       <div className="flex w-full mb-6 me-96 justify-end">
+        <button
+          onClick={() => setDark(!dark)}
+          className="relative w-20 h-10 rounded-full bg-slate-500 dark:bg-gray-700"
+        >
+          <div
+            className={`absolute top-1 left-1 w-8 h-8 rounded-full bg-white flex items-center justify-center transition-transform ${
+              dark ? "translate-x-10" : "translate-x-0"
+            }`}
+          >
+            {dark ? <FaMoon className="text-slate-400" /> : <FaSun className="text-slate-400" />}
+          </div>
+        </button>
+      </div>
+
+        <img src={dark ? logolight : logodark} alt="Logo" className="w-40 mb-6 mx-auto" />
         <div className={cardClasses}>
           <h1 className="text-2xl font-bold mb-4">Result</h1>
           <p className="text-lg">Score: {score}</p>
@@ -112,12 +123,12 @@ export default function App() {
 
         <Question question={questions[index]} selected={answers[index]} choose={choose} />
 
-        <div className="flex justify-between mt-6">
+        <div className="flex justify-end mt-6">
           <button
             onClick={() =>
               index + 1 === questions.length ? setFinished(true) : setIndex(index + 1)
             }
-            className="px-4 py-2 rounded-xl bg-slate-600 text-white"
+            className="px-6 py-3 rounded-xl bg-slate-600 text-white"
           >
             {index + 1 === questions.length ? "Finish" : "Next"}
           </button>
