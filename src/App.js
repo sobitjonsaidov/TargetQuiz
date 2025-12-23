@@ -47,11 +47,11 @@ export default function App() {
       ? "Pre-Intermediate"
       : "Intermediate";
 
-     const wrapperClasses = `min-h-screen flex flex-col items-center justify-center transition-colors duration-300 px-2 sm:px-6 md:px-8 ${
+  const wrapperClasses = `min-h-screen flex flex-col items-center justify-center transition-colors duration-300 px-1 sm:px-6 md:px-8 ${
     dark ? "bg-slate-900" : "bg-slate-200"
   }`;
 
-   const cardClasses = `text-center w-full sm:max-w-lg md:max-w-2xl mx-auto rounded-xl sm:rounded-2xl shadow p-4 sm:p-6 md:p-8 select-none transition-colors duration-300 ${
+  const cardClasses = `text-center w-[calc(100%-0.5rem)] sm:max-w-lg md:max-w-4xl mx-auto rounded-2xl shadow-lg p-3 sm:p-6 md:p-8 select-none transition-colors duration-300 ${
     dark ? "bg-slate-800 text-white" : "bg-white text-gray-900"
   }`;
 
@@ -60,7 +60,7 @@ export default function App() {
   if (finished) {
     return (
       <div className={wrapperClasses}>
-        <div className="flex w-full max-w-xs sm:max-w-lg md:max-w-2xl justify-end mb-4 sm:mb-6">
+        <div className="flex w-full sm:max-w-lg md:max-w-2xl justify-end mb-4 sm:mb-6">
           <button
             onClick={() => setDark(!dark)}
             className="relative w-16 h-8 sm:w-20 sm:h-10 rounded-full bg-slate-500 dark:bg-gray-700"
@@ -78,9 +78,9 @@ export default function App() {
         <img src={dark ? logolight : logodark} alt="Logo" className="w-40 sm:w-48 md:w-52 lg:w-56 xl:w-64 mb-6 mx-auto" />
 
         <div className={cardClasses}>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">Result</h1>
-          <p className="text-lg sm:text-xl md:text-2xl">Score: {score}</p>
-          <p className="text-xl sm:text-2xl md:text-3xl font-semibold mt-2">Level: {level}</p>
+          <h1 className="text-3xl sm:text-4xl md:text-4xl font-bold mb-4 sm:mb-4">Result</h1>
+          <p className="text-xl sm:text-2xl md:text-2xl">Score: {score}</p>
+          <p className="text-2xl sm:text-3xl md:text-3xl font-semibold mt-3">Level: {level}</p>
         </div>
       </div>
     );
@@ -88,7 +88,7 @@ export default function App() {
 
   return (
     <div className={wrapperClasses}>
-      <div className="flex justify-end w-full max-w-xs sm:max-w-lg md:max-w-2xl mb-4 sm:mb-6">
+      <div className="flex justify-end w-full sm:max-w-lg md:max-w-2xl mb-4 sm:mb-6">
         <button
           onClick={() => setDark(!dark)}
           className="relative w-16 h-8 sm:w-20 sm:h-10 rounded-full bg-slate-500 dark:bg-gray-700"
@@ -110,7 +110,7 @@ export default function App() {
       />
 
       <div className={cardClasses}>
-        <div className="flex justify-between mb-3 sm:mb-4 text-xs sm:text-sm md:text-base">
+        <div className="flex justify-between mb-4 sm:mb-4 text-sm sm:text-base md:text-base font-medium">
           <span>
             Question {index + 1}/{questions.length}
           </span>
@@ -121,12 +121,12 @@ export default function App() {
 
         <Question question={questions[index]} selected={answers[index]} choose={choose} />
 
-        <div className="flex justify-end mt-4 sm:mt-6">
+        <div className="flex justify-end mt-5 sm:mt-6">
           <button
             onClick={() =>
               index + 1 === questions.length ? setFinished(true) : setIndex(index + 1)
             }
-            className="px-4 py-2 sm:px-5 sm:py-2 md:px-6 md:py-3 text-base sm:text-xl md:text-2xl lg:text-3xl rounded-lg sm:rounded-xl bg-slate-600 text-white transition-colors hover:bg-slate-700"
+            className="px-6 py-3 sm:px-6 sm:py-3 md:px-8 md:py-4 text-lg sm:text-xl md:text-2xl font-semibold rounded-xl bg-slate-600 text-white transition-colors hover:bg-slate-700"
           >
             {index + 1 === questions.length ? "Finish" : "Next"}
           </button>
