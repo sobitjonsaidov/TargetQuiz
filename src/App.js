@@ -119,11 +119,11 @@ export default function App() {
           <img
             src={dark ? logolight : logodark}
             alt="Logo"
-            className="w-40 sm:w-48 md:w-52 lg:w-56 xl:w-64 mb-6 mx-auto"
+            className="w-56 sm:w-64 md:w-72 lg:w-60 xl:w-86 mb-6 mx-auto"
           />
 
           <div className={cardClasses}>
-            <div className="flex justify-between mb-6 text-base sm:text-lg md:text-xl font-semibold">
+            <div className="flex justify-between mb-6 text-base sm:text-lg md:text-4xl lg:text-2xl font-semibold">
               <span>
                 Question {index + 1}/{questions.length}
               </span>
@@ -139,7 +139,7 @@ export default function App() {
                 onClick={() =>
                   index + 1 === questions.length ? setFinished(true) : setIndex(index + 1)
                 }
-                className="px-6 py-3 sm:px-6 sm:py-3 md:px-8 md:py-4 text-lg sm:text-xl md:text-2xl font-semibold rounded-xl bg-slate-600 text-white transition-colors hover:bg-slate-700"
+                className="px-6 py-3 sm:px-6 sm:py-3 lg:px-5 lg:py-3 md:px-12 md:py-8 text-lg sm:text-xl md:text-4xl font-semibold rounded-xl bg-slate-600 text-white transition-colors hover:bg-slate-700"
               >
                 {index + 1 === questions.length ? "Finish" : "Next"}
               </button>
